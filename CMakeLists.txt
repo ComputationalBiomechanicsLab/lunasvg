@@ -7,6 +7,7 @@ set(CMAKE_C_STANDARD 11)
 
 option(BUILD_SHARED_LIBS "Builds as shared library" OFF)
 option(LUNASVG_BUILD_EXAMPLES "Builds examples" OFF)
+option(LUNASVG_INSTALL "Generate lunasvg install target" ON)
 
 add_library(lunasvg)
 
@@ -23,16 +24,18 @@ if(LUNASVG_BUILD_EXAMPLES)
     add_subdirectory(example)
 endif()
 
-set(LUNASVG_LIBDIR ${CMAKE_INSTALL_PREFIX}/lib)
-set(LUNASVG_INCDIR ${CMAKE_INSTALL_PREFIX}/include)
+if(LUNASVG_INSTALL)
+    set(LUNASVG_LIBDIR ${CMAKE_INSTALL_PREFIX}/lib)
+    set(LUNASVG_INCDIR ${CMAKE_INSTALL_PREFIX}/include)
 
-install(FILES
-    include/lunasvg.h
-    DESTINATION ${LUNASVG_INCDIR}
-)
+    install(FILES
+        include/lunasvg.h
+        DESTINATION ${LUNASVG_INCDIR}
+    )
 
-install(TARGETS lunasvg
-    LIBRARY     DESTINATION    ${LUNASVG_LIBDIR}
-    ARCHIVE     DESTINATION    ${LUNASVG_LIBDIR}
-    INCLUDES    DESTINATION    ${LUNASVG_INCDIR}
-)
+    install(TARGETS lunasvg
+        LIBRARY     DESTINATION    ${LUNASVG_LIBDIR}
+        ARCHIVE     DESTINATION    ${LUNASVG_LIBDIR}
+        INCLUDES    DESTINATION    ${LUNASVG_INCDIR}
+    )
+endif()
